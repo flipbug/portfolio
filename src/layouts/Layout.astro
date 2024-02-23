@@ -22,17 +22,25 @@ const { title } = Astro.props;
   <body>
     <header class="pb-10 pt-5">
       <div class="wrapper flex gap-10">
-        <div class="flex-none text-lg font-normal tracking-widest"><a href="/">Daniel Milenkovic</a></div>
+        <div class="flex-none text-3xl font-normal logo">
+          <a href="/">Daniel Milenkovic</a>
+        </div>
 
         <div class="flex-auto"></div>
 
         <nav class="flex-none">
-          <ul class="flex gap-10 text-lg tracking-wide">
+          <ul class="flex text-lg tracking-wide">
             <li>
-              <a href="#">About</a>
+              <a href="/about">About</a>
             </li>
             <li>
-              <a href="#">Contact</a>
+              <a href="/contact">Contact</a>
+            </li>
+            <li>
+              <a
+                href="https://instagram.com/danielmilenkovic.art"
+                target="_blank">Instagram</a
+              >
             </li>
           </ul>
         </nav>
@@ -70,8 +78,28 @@ const { title } = Astro.props;
       font-weight: 500;
     }
 
+    nav ul li::after {
+      content: "/";
+      font-weight: normal;
+      padding-left: 10px;
+      padding-right: 10px;
+      color: rgb(var(--accent));
+    }
+
+    .logo:hover {
+      color: rgb(var(--accent))
+    }
+
+    nav a:hover {
+      border-bottom: 2px solid rgb(var(--accent));
+    }
+
+    nav ul li:last-child::after {
+      content: "";
+    }
+
     footer {
-      font-size: 0.8rem
+      font-size: 0.8rem;
     }
 
     footer h2 {
