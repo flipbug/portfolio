@@ -1,0 +1,59 @@
+:root {
+  --accent: 136, 58, 234;
+  --accent-light: 224, 204, 250;
+  --accent-dark: 49, 10, 101;
+  --accent-gradient: linear-gradient(
+    45deg,
+    rgb(var(--accent)),
+    rgb(var(--accent-light)) 30%,
+    white 60%
+  );
+}
+html {
+  font-family: system-ui, sans-serif;
+  background: #e0e0e0;
+  color: rgb(44, 44, 44);
+  background-size: 224px;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+footer {
+  background: #131313;
+  color: white;
+}
+
+main {
+  flex: 1 0 auto;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "geomanistregular", sans-serif;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.wrapper {
+  max-width: calc(1200px - (30px));
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+@media screen and (min-width: 800px) {
+  .wrapper {
+    max-width: calc(1200px - (30px * 2));
+    padding-right: 30px;
+    padding-left: 30px;
+  }
+}

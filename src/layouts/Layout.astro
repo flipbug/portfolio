@@ -1,6 +1,9 @@
 ---
+import "../styles/fonts.css";
+import "../styles/global.css";
+
 interface Props {
-	title: string;
+  title: string;
 }
 
 const { title } = Astro.props;
@@ -8,44 +11,72 @@ const { title } = Astro.props;
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="description" content="Astro description" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{title}</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="pb-10 pt-5">
+      <div class="wrapper flex gap-10">
+        <div class="flex-none text-lg font-normal tracking-widest"><a href="/">Daniel Milenkovic</a></div>
+
+        <div class="flex-auto"></div>
+
+        <nav class="flex-none">
+          <ul class="flex gap-10 text-lg tracking-wide">
+            <li>
+              <a href="#">About</a>
+            </li>
+            <li>
+              <a href="#">Contact</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main class="pb-20">
+      <div class="wrapper">
+        <slot />
+      </div>
+    </main>
+
+    <footer class="pt-10 pb-10">
+      <div class="wrapper">
+        <h2>Subscribe to my substack</h2>
+        <iframe
+          src="https://danielmilenkovic.substack.com/embed"
+          width="480"
+          height="150"
+          style="border:0; border-radius: 10px; background:transparent;"
+          frameborder="0"
+          scrolling="no"></iframe>
+        <p class="mt-10">© {new Date().getFullYear()} Daniel Milenkovic</p>
+      </div>
+    </footer>
+  </body>
+
+  <style>
+    header {
+      font-family: "geomanistregular", sans-serif;
+    }
+    nav {
+      line-height: 1.5;
+      text-align: right;
+      font-weight: 500;
+    }
+
+    footer {
+      font-size: 0.8rem
+    }
+
+    footer h2 {
+      font-weight: 400;
+      font-size: 2rem;
+    }
+  </style>
 </html>
-<style is:global>
-	:root {
-		--accent: 136, 58, 234;
-		--accent-light: 224, 204, 250;
-		--accent-dark: 49, 10, 101;
-		--accent-gradient: linear-gradient(
-			45deg,
-			rgb(var(--accent)),
-			rgb(var(--accent-light)) 30%,
-			white 60%
-		);
-	}
-	html {
-		font-family: system-ui, sans-serif;
-		background: #13151a;
-		background-size: 224px;
-	}
-	code {
-		font-family:
-			Menlo,
-			Monaco,
-			Lucida Console,
-			Liberation Mono,
-			DejaVu Sans Mono,
-			Bitstream Vera Sans Mono,
-			Courier New,
-			monospace;
-	}
-</style>

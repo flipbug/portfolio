@@ -1,0 +1,17 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  imageUrl: string;
+  alt: string;
+  width: number;
+}
+
+const { imageUrl, alt, width } = Astro.props;
+
+// workaround to dynamically import local images
+const images = await import.meta.glob("../assets/images/*");
+const image: any = images[imageUrl]();
+---
+
+<Image src={image} alt={alt} width={width} />
