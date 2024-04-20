@@ -64,3 +64,33 @@
   font-weight: normal;
   font-style: italic;
 }
+
+@font-face {
+  font-family: "supplymono";
+  src: 
+    url("/fonts/PPSupplyMono-Regular.woff2") format("woff2"),
+    url("/fonts/PPSupplyMono-Regular.woff") format("woff"),
+    url("/fonts/PPSupplyMono-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "supplymono";
+  src:
+    url("/fonts/PPSupplyMono-Bold.woff2") format("woff2"),
+    url("/fonts/PPSupplyMono-Bold.woff") format("woff"),
+    url("/fonts/PPSupplyMono-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "supplymono";
+  src: 
+    url("/fonts/PPSupplyMono-Medium.woff2") format("woff2"),
+    url("/fonts/PPSupplyMono-Medium.woff") format("woff"),
+    url("/fonts/PPSupplyMono-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}

@@ -1,12 +1,52 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import LocalImage from "@components/LocalImage.astro";
+import { Image } from "astro:assets";
 
-const gallery = await Astro.glob("../pages/gallery/*.mdx");
+import Me from "../assets/images/me.jpg";
 ---
 
-<Layout title="Welcome to Astro.">
+<Layout title="Daniel Milenkovic">
+  <h1 class="text-4xl mt-5 border-solid border-black border-2 px-5 py-2">About</h1>
+  <div class="mt-20 w-full flex  justify-center">
+    <div class="max-w-lg">
+      <p>
+        Hi, my name is Daniel Milenkovic, currently based in Winterthur,
+        Switzerland.
+      </p>
 
+      <p>
+        I started this life in 1993 and from early on wished to become an
+        architect. Plans change and during school I developed a proficiency for
+        code, which led me into the world of programming and obtaining a
+        bachelor's degree in Computer Science.
+      </p>
+
+      <p>
+        Near the end of 2020 I rediscovered my passion for art, which turned
+        into a beautiful journey exploring the human figure. I'm painting mostly traditionally with oil.
+      </p>
+
+      <p>
+        Besides art and programming my interests range from mythology to
+        skateboarding and especially reading comics.
+      </p>
+
+      <p>
+        Feel free to contact me directly via <a
+          class="font-bold"
+          href="mailto:danielmilenkovic@proton.me">danielmilenkovic@proton.me</a
+        > or via <a
+          class="font-bold"
+          href="https://instagram.com/danielmilenkovic.art"
+          target="_blank">instagram</a
+        >. I'm looking forward to hearing from you.
+      </p>
+    </div>
+  </div>
 </Layout>
 
-<style></style>
+<style>
+  p {
+    font-family: "Courier New", Courier, monospace;
+  }
+</style>

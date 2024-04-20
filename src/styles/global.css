@@ -11,7 +11,7 @@
 }
 html {
   font-family: system-ui, sans-serif;
-  background: #e0e0e0;
+  background: #d1d0d0;
   color: rgb(44, 44, 44);
   background-size: 224px;
 }
@@ -20,11 +20,6 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-}
-
-footer {
-  background: #131313;
-  color: white;
 }
 
 main {
@@ -37,9 +32,17 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "geomanistregular", sans-serif;
+  font-family: "supplymono", monospace;
   font-weight: bold;
   line-height: 1;
+}
+
+a:hover {
+  color: rgb(var(--accent));
+}
+
+p{
+  margin-bottom: 1rem
 }
 
 .wrapper {

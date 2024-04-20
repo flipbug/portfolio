@@ -1,29 +1,11 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import LocalImage from "@components/LocalImage.astro";
+import Layout from "@layouts/Layout.astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+import Gallery from "@components/Gallery.astro";
 
-const gallery = await Astro.glob("../pages/gallery/*.mdx");
+const posts: CollectionEntry<"gallery">[] = await getCollection("gallery");
 ---
 
-<Layout title="Welcome to Astro.">
-
-  <div class="grid md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1 gap-5">
-    {
-      gallery
-        .filter((post) => !post.frontmatter.hidden)
-        .map((post) => (
-          <div>
-            <a href={post.url}>
-              <LocalImage
-                imageUrl={post.frontmatter.image}
-                alt={post.frontmatter.title}
-                width={350}
-              />
-            </a>
-          </div>
-        ))
-    }
-  </div>
+<Layout title="Daniel Milenkovic">
+  <Gallery posts={posts} />
 </Layout>
-
-<style></style>
