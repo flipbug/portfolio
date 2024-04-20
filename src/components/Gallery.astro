@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import LocalImage from "./LocalImage.astro";
+import Filter from "./Filter.astro";
 
 interface Props {
   posts: CollectionEntry<"gallery">[];
@@ -11,16 +12,7 @@ const { tag, posts } = Astro.props;
 ---
 
 <div>
-  <div
-    class="border-solid border-black border-2 pt-2 pb-2 pl-5 pr-5 mb-10 filter"
-  >
-    <a href="/" class={!tag ? "font-bold" : ""}>All</a>
-    <a href="/painting" class={tag == "painting" ? "font-bold" : ""}
-      >Paintings</a
-    >
-    <a href="/drawing" class={tag == "drawing" ? "font-bold" : ""}>Drawings</a>
-  </div>
-
+  <Filter tag={tag} />
   <div class="grid md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1 gap-5">
     {
       posts
@@ -39,20 +31,3 @@ const { tag, posts } = Astro.props;
     }
   </div>
 </div>
-
-<style>
-    .filter{
-        font-family: 'supplymono', monospace;
-    }
-  .filter a::after {
-    content: "/";
-    font-weight: normal;
-    padding-left: 10px;
-    padding-right: 10px;
-    color: rgb(var(--accent));
-  }
-
-  .filter a:last-child::after {
-    content: "";
-  }
-</style>

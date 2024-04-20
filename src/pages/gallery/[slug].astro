@@ -1,4 +1,5 @@
 ---
+import Filter from "@components/Filter.astro";
 import LocalImage from "@components/LocalImage.astro";
 import Layout from "@layouts/Layout.astro";
 import { getCollection } from "astro:content";
@@ -26,6 +27,8 @@ const { Content } = await post.render();
 ---
 
 <Layout title={post.data.title}>
+  <Filter tag={post.data.tags[0]} />
+
   <div class="flex flex-row gap-10">
     <div class="basis-2/3">
       {

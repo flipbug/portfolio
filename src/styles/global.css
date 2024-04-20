@@ -11,8 +11,8 @@
 }
 html {
   font-family: system-ui, sans-serif;
-  background: #d1d0d0;
-  color: rgb(44, 44, 44);
+  background: #1d1d1d;
+  background: linear-gradient(175deg, rgba(33,25,51,1) 0%, rgba(5,11,23,1) 58%, rgba(0,0,0,1) 100%);   color: rgb(255, 255, 255);
   background-size: 224px;
 }
 

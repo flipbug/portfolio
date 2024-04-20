@@ -1,0 +1,30 @@
+---
+interface Props {
+  tag?: string | undefined;
+}
+
+const { tag } = Astro.props;
+---
+
+<div class="mb-10 filter">
+  <a href="/" class={!tag ? "font-bold" : ""}>All</a>
+  <a href="/painting" class={tag == "painting" ? "font-bold" : ""}>Paintings</a>
+  <a href="/drawing" class={tag == "drawing" ? "font-bold" : ""}>Drawings</a>
+</div>
+
+<style>
+  .filter {
+    font-family: "supplymono", monospace;
+  }
+  .filter a::after {
+    content: "/";
+    font-weight: normal;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: rgb(var(--accent));
+  }
+
+  .filter a:last-child::after {
+    content: "";
+  }
+</style>
