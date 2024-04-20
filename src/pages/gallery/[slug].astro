@@ -29,8 +29,8 @@ const { Content } = await post.render();
 <Layout title={post.data.title}>
   <Filter tag={post.data.tags[0]} />
 
-  <div class="flex flex-row gap-10">
-    <div class="basis-2/3">
+  <div class="flex justify-center">
+    <div class="grid grid-flow-row gap-2 max-w-2xl pt-5">
       {
         !!post.data.image && (
           <LocalImage
@@ -41,7 +41,11 @@ const { Content } = await post.render();
         )
       }
 
-      <div class="grid grid-flow-col pt-5">
+      <div>
+        <Content />
+      </div>
+
+      <div class="grid grid-flow-col pt-5 mb-5">
         {!!prev && <a href={`/gallery/${prev}`}>← prev</a>}
         {
           !!next && (
@@ -52,14 +56,5 @@ const { Content } = await post.render();
         }
       </div>
     </div>
-    <div class="basis-1/3">
-      <Content />
-    </div>
   </div>
 </Layout>
-
-<style>
-  a {
-    font-family: "supplymono", monospace;
-  }
-</style>

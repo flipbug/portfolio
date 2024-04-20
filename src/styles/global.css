@@ -10,8 +10,8 @@
   );
 }
 html {
-  font-family: system-ui, sans-serif;
-  background: #1d1d1d;
+  font-family: "supplymono", monospace;
+  background: #000;
   background: linear-gradient(
     175deg,
     rgba(24, 20, 33, 1) 0%,
@@ -19,7 +19,6 @@ html {
     rgba(0, 0, 0, 1) 100%
   );
   color: rgb(255, 255, 255);
-  background-size: 224px;
 }
 
 body {

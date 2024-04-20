@@ -22,6 +22,6 @@ const { posts } = Astro.props;
 const { tag } = Astro.params;
 ---
 
-<Layout title="Daniel Milenkovic">
+<Layout title={`Daniel Milenkovic - ${tag}`}>
   <Gallery posts={posts} tag={tag} />
 </Layout>
