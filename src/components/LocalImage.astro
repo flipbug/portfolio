@@ -10,7 +10,7 @@ interface Props {
 const { imageUrl, alt, width } = Astro.props;
 
 // workaround to dynamically import local images
-const images = await import.meta.glob("../assets/images/*");
+const images = import.meta.glob("../assets/images/*");
 const image: any = images[imageUrl]();
 ---
 

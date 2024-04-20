@@ -24,12 +24,12 @@ const { tag, posts } = Astro.props;
   <div class="grid md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1 gap-5">
     {
       posts
-        .filter((post) => !post.data.hidden)
+        .filter((post) => !post.data.hidden && post.data.image)
         .map((post) => (
           <div>
             <a href={`/gallery/${post.slug}`}>
               <LocalImage
-                imageUrl={post.data.image}
+                imageUrl={post.data.image!}
                 alt={post.data.title}
                 width={350}
               />

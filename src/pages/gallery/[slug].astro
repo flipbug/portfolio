@@ -1,7 +1,7 @@
 ---
 import LocalImage from "@components/LocalImage.astro";
 import Layout from "@layouts/Layout.astro";
-import { getCollection, getEntry } from "astro:content";
+import { getCollection } from "astro:content";
 
 export async function getStaticPaths() {
   const allPosts = await getCollection("gallery");
@@ -28,11 +28,16 @@ const { Content } = await post.render();
 <Layout title={post.data.title}>
   <div class="flex flex-row gap-10">
     <div class="basis-2/3">
-      <LocalImage
-        imageUrl={post.data.image}
-        alt={post.data.title}
-        width={1350}
-      />
+      {
+        !!post.data.image && (
+          <LocalImage
+            imageUrl={post.data.image}
+            alt={post.data.title}
+            width={1350}
+          />
+        )
+      }
+
       <div class="grid grid-flow-col pt-5">
         {!!prev && <a href={`/gallery/${prev}`}>← prev</a>}
         {
@@ -43,8 +48,6 @@ const { Content } = await post.render();
           )
         }
       </div>
-  
-  
     </div>
     <div class="basis-1/3">
       <Content />
