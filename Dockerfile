@@ -1,8 +1,6 @@
 # syntax = docker/dockerfile:1
 
-# Adjust NODE_VERSION as desired
-ARG NODE_VERSION=20.12.2
-FROM node:${NODE_VERSION}-slim as base
+FROM oven/bun:1.2-slim as base
 
 LABEL fly_launch_runtime="Astro"
 
@@ -22,17 +20,13 @@ RUN apt-get update -qq && \
 
 # Install node modules
 COPY --link package-lock.json package.json ./
-RUN npm ci --include=dev
+RUN bun ci --include=dev
 
 # Copy application code
 COPY --link . .
 
 # Build application
-RUN npm run build
-
-# Remove development dependencies
-RUN npm prune --omit=dev
-
+RUN bun run build
 
 # Final stage for app image
 FROM nginx
