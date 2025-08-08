@@ -4,8 +4,9 @@ import { getCollection, type CollectionEntry } from "astro:content";
 import Gallery from "@components/Gallery.astro";
 
 const posts: CollectionEntry<"gallery">[] = await getCollection("gallery");
+const sortedPosts = posts.sort((a, b) => a.data.order - b.data.order);
 ---
 
 <Layout title="Daniel Milenkovic">
-  <Gallery posts={posts} />
+  <Gallery posts={sortedPosts} />
 </Layout>

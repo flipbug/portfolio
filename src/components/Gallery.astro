@@ -9,25 +9,96 @@ interface Props {
 }
 
 const { tag, posts } = Astro.props;
+const filteredPosts = posts.filter(
+  (post) => !post.data.hidden && post.data.image,
+);
+const isIndexPage = !tag;
 ---
 
 <div>
   <Filter tag={tag} />
-  <div class="grid md:grid-cols-3 sm:grid-cols-2 xs:grid-cols-1 gap-5">
-    {
-      posts
-        .filter((post) => !post.data.hidden && post.data.image)
-        .map((post) => (
-          <div>
-            <a href={`/gallery/${post.slug}`}>
-              <LocalImage
-                imageUrl={post.data.image!}
-                alt={post.data.title}
-                width={650}
-              />
-            </a>
+  {
+    isIndexPage && filteredPosts.length > 0 && (
+      <div class="mb-12 relative group overflow-hidden bg-gray-100 max-w-3xl mx-auto">
+        <a href={`/gallery/${filteredPosts[0].slug}`} class="block h-full">
+          <LocalImage
+            imageUrl={filteredPosts[0].data.image!}
+            alt={filteredPosts[0].data.title}
+            width={1200}
+            class="w-full h-full object-cover object-center"
+          />
+          <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out">
+            <p class="text-lg font-medium">{filteredPosts[0].data.title}</p>
           </div>
-        ))
+        </a>
+      </div>
+    )
+  }
+  {
+    isIndexPage && (
+      <div class="max-w-3xl mx-auto mb-12 text-center">
+        <blockquote class="text-xl md:text-2xl font-medium  italic leading-relaxed">
+          "Art is the bridge between what is and what could be – I paint the
+          stories that words cannot tell."
+        </blockquote>
+        <cite class="block mt-4 text-sm text-gray-600 not-italic">
+          – Daniel Milenkovic
+        </cite>
+      </div>
+    )
+  }
+  <div class="gallery-grid">
+    {
+      filteredPosts.slice(isIndexPage ? 1 : 0).map((post) => (
+        <div class="gallery-item relative group overflow-hidden aspect-[3/4] bg-gray-100">
+          <a href={`/gallery/${post.slug}`} class="block h-full">
+            <LocalImage
+              imageUrl={post.data.image!}
+              alt={post.data.title}
+              width={650}
+              class="w-full h-full object-cover object-center transition-transform duration-300 ease-in-out group-hover:scale-105"
+            />
+            <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white p-3 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out">
+              <p class="text-sm font-medium">{post.data.title}</p>
+            </div>
+          </a>
+        </div>
+      ))
     }
   </div>
 </div>
+
+<style>
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.25rem;
+  }
+
+  /* Responsive grid columns */
+  @media (max-width: 639px) {
+    .gallery-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (min-width: 640px) and (max-width: 767px) {
+    .gallery-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .gallery-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .gallery-item {
+    transition: transform 0.2s ease-in-out;
+  }
+
+  .gallery-item:hover {
+    transform: translateY(-2px);
+  }
+</style>

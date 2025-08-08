@@ -6,10 +6,11 @@ import Gallery from "@components/Gallery.astro";
 export async function getStaticPaths() {
   const allTags = ["painting", "drawing"];
   const allPosts = await getCollection("gallery");
+  const sortedPosts = allPosts.sort((a, b) => a.data.order - b.data.order);
 
   return allTags.flatMap((tag) => {
-    const filteredPosts = allPosts.filter((post) =>
-      post.data.tags.includes(tag)
+    const filteredPosts = sortedPosts.filter((post) =>
+      post.data.tags.includes(tag),
     );
     return {
       params: { tag },

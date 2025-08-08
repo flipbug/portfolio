@@ -5,13 +5,14 @@ interface Props {
   imageUrl: string;
   alt: string;
   width: number;
+  class?: string;
 }
 
-const { imageUrl, alt, width } = Astro.props;
+const { imageUrl, alt, width, ...rest } = Astro.props;
 
 // workaround to dynamically import local images
 const images = import.meta.glob("../assets/images/*");
 const image: any = images[imageUrl]();
 ---
 
-<Image src={image} alt={alt} width={width} />
+<Image src={image} alt={alt} width={width} {...rest} />
