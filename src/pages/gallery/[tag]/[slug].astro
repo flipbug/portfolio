@@ -1,0 +1,92 @@
+---
+import Filter from "../../../components/Filter.astro";
+import LocalImage from "../../../components/LocalImage.astro";
+import Layout from "../../../layouts/Layout.astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+
+export async function getStaticPaths() {
+    const allPosts = await getCollection("gallery");
+    const filteredPosts = allPosts.filter((post) => !post.data.hidden);
+
+    const paths: Array<{
+        params: { tag: string; slug: string };
+        props: {
+            post: CollectionEntry<"gallery">;
+            tag: string;
+            next: string;
+            prev: string;
+        };
+    }> = [];
+
+    // Group posts by their primary tag
+    const postsByTag: Record<string, CollectionEntry<"gallery">[]> = {};
+    filteredPosts.forEach((post) => {
+        const primaryTag = post.data.tags[0]; // Use first tag as primary
+        if (!postsByTag[primaryTag]) {
+            postsByTag[primaryTag] = [];
+        }
+        postsByTag[primaryTag].push(post);
+    });
+
+    // Sort posts within each tag and generate paths
+    Object.entries(postsByTag).forEach(([tag, posts]) => {
+        const sortedPosts = posts.sort((a, b) => a.data.order - b.data.order);
+
+        sortedPosts.forEach((post, index) => {
+            paths.push({
+                params: {
+                    tag: tag,
+                    slug: post.slug,
+                },
+                props: {
+                    post: post,
+                    tag: tag,
+                    next:
+                        index < sortedPosts.length - 1
+                            ? sortedPosts[index + 1].slug
+                            : "",
+                    prev: index > 0 ? sortedPosts[index - 1].slug : "",
+                },
+            });
+        });
+    });
+
+    return paths;
+}
+
+const { post, tag, next, prev } = Astro.props;
+const { Content } = await post.render();
+---
+
+<Layout title={post.data.title}>
+    <Filter tag={tag} />
+
+    <div class="flex justify-center">
+        <div class="grid grid-flow-row gap-2 max-w-3xl pt-5">
+            {
+                !!post.data.image && (
+                    <LocalImage
+                        imageUrl={post.data.image}
+                        alt={post.data.title}
+                        width={1350}
+                    />
+                )
+            }
+
+            <div>
+                <Content />
+            </div>
+
+            <div class="grid grid-flow-col pt-5 mb-5">
+                {!!prev && <a href={`/gallery/${tag}/${prev}`}>← prev</a>}
+                {
+                    !!next && (
+                        <a href={`/gallery/${tag}/${next}`} class="text-right">
+                            next →
+                        </a>
+                    )
+                }
+            </div>
+        </div>
+    </div>
+</Layout>

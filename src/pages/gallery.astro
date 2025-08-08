@@ -1,12 +1,12 @@
 ---
-import Layout from "@layouts/Layout.astro";
+import Layout from "../layouts/Layout.astro";
 import { getCollection, type CollectionEntry } from "astro:content";
-import Homepage from "@components/Homepage.astro";
+import GalleryComponent from "../components/Gallery.astro";
 
 const posts: CollectionEntry<"gallery">[] = await getCollection("gallery");
 const sortedPosts = posts.sort((a, b) => a.data.order - b.data.order);
 ---
 
-<Layout title="Daniel Milenkovic">
-  <Homepage posts={sortedPosts} />
+<Layout title="Gallery - Daniel Milenkovic">
+    <GalleryComponent posts={sortedPosts} />
 </Layout>

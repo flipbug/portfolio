@@ -1,0 +1,29 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection, type CollectionEntry } from "astro:content";
+import GalleryComponent from "../../components/Gallery.astro";
+
+export async function getStaticPaths() {
+    const allTags = ["painting", "drawing"];
+    const allPosts = await getCollection("gallery");
+    const sortedPosts = allPosts.sort((a, b) => a.data.order - b.data.order);
+
+    return allTags.map((tag) => {
+        const filteredPosts = sortedPosts.filter(
+            (post) => post.data.tags.includes(tag) && !post.data.hidden,
+        );
+        return {
+            params: { tag },
+            props: { posts: filteredPosts, tag },
+        };
+    });
+}
+
+const { posts, tag } = Astro.props;
+---
+
+<Layout
+    title={`${tag.charAt(0).toUpperCase() + tag.slice(1)}s - Daniel Milenkovic`}
+>
+    <GalleryComponent posts={posts} tag={tag} />
+</Layout>

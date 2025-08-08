@@ -1,28 +1,14 @@
 ---
-import { getCollection } from "astro:content";
-import Layout from "@layouts/Layout.astro";
-import Gallery from "@components/Gallery.astro";
-
 export async function getStaticPaths() {
   const allTags = ["painting", "drawing"];
-  const allPosts = await getCollection("gallery");
-  const sortedPosts = allPosts.sort((a, b) => a.data.order - b.data.order);
 
-  return allTags.flatMap((tag) => {
-    const filteredPosts = sortedPosts.filter((post) =>
-      post.data.tags.includes(tag),
-    );
-    return {
-      params: { tag },
-      props: { posts: filteredPosts },
-    };
-  });
+  return allTags.map((tag) => ({
+    params: { tag },
+  }));
 }
 
-const { posts } = Astro.props;
 const { tag } = Astro.params;
----
 
-<Layout title={`Daniel Milenkovic - ${tag}`}>
-  <Gallery posts={posts} tag={tag} />
-</Layout>
+// Redirect to the new gallery page structure
+return Astro.redirect(`/gallery/${tag}`);
+---

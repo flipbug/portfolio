@@ -1,0 +1,175 @@
+---
+import type { CollectionEntry } from "astro:content";
+import LocalImage from "./LocalImage.astro";
+
+interface Props {
+    posts: CollectionEntry<"gallery">[];
+}
+
+const { posts } = Astro.props;
+
+// Filter out hidden posts and get valid posts with images
+const filteredPosts = posts.filter(
+    (post) => !post.data.hidden && post.data.image,
+);
+
+// Find the highlight post, fallback to first post if none marked as highlight
+const highlightPost =
+    filteredPosts.find((post) => post.data.highlight) || filteredPosts[0];
+
+// Get paintings and drawings (first 3 of each)
+const paintings = filteredPosts
+    .filter(
+        (post) => post.data.tags.includes("painting") && !post.data.highlight,
+    )
+    .slice(0, 3);
+
+const drawings = filteredPosts
+    .filter(
+        (post) => post.data.tags.includes("drawing") && !post.data.highlight,
+    )
+    .slice(0, 3);
+---
+
+<div>
+    <!-- Highlight Section -->
+    {
+        highlightPost && (
+            <div class="mb-12 relative group overflow-hidden bg-gray-100 max-w-3xl mx-auto">
+                <a
+                    href={`/gallery/${highlightPost.data.tags[0]}/${highlightPost.slug}`}
+                    class="block h-full"
+                >
+                    <LocalImage
+                        imageUrl={highlightPost.data.image!}
+                        alt={highlightPost.data.title}
+                        width={1200}
+                        class="w-full h-full object-cover object-center"
+                    />
+                    <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white p-4 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out">
+                        <p class="text-lg font-medium">
+                            {highlightPost.data.title}
+                        </p>
+                    </div>
+                </a>
+            </div>
+        )
+    }
+
+    <!-- Quote Section -->
+    <div class="max-w-3xl mx-auto mb-12 text-center">
+        <blockquote
+            class="text-xl md:text-2xl font-medium italic leading-relaxed"
+        >
+            "I wander through my inner realms guided by my curiosity with the
+            intention to gain deeper insight into the various aspects of our
+            Self. Bringing forth the stories that lie within."
+        </blockquote>
+        <cite class="block mt-4 text-sm text-gray-600 not-italic">
+            – Daniel Milenkovic
+        </cite>
+    </div>
+
+    <!-- More Work Section -->
+    <div class="max-w-6xl mx-auto">
+        <!-- <h2 class="text-2xl font-medium mb-8 text-center">More Work</h2> -->
+
+        <!-- Paintings Section -->
+        {
+            paintings.length > 0 && (
+                <div class="mb-12">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-medium">Paintings</h2>
+                        <a
+                            href="/gallery/painting"
+                            class="text-sm text-gray-600"
+                        >
+                            View all →
+                        </a>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {paintings.map((post) => (
+                            <div class="gallery-item relative group overflow-hidden aspect-[3/4] bg-gray-100">
+                                <a
+                                    href={`/gallery/${post.data.tags[0]}/${post.slug}`}
+                                    class="block h-full"
+                                >
+                                    <LocalImage
+                                        imageUrl={post.data.image!}
+                                        alt={post.data.title}
+                                        width={400}
+                                        class="w-full h-full object-cover object-center transition-transform duration-300 ease-in-out group-hover:scale-105"
+                                    />
+                                    <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white p-3 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out">
+                                        <p class="text-sm font-medium">
+                                            {post.data.title}
+                                        </p>
+                                    </div>
+                                </a>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )
+        }
+
+        <!-- Drawings Section -->
+        {
+            drawings.length > 0 && (
+                <div class="mb-12">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="text-xl font-medium">Drawings</h2>
+                        <a
+                            href="/gallery/drawing"
+                            class="text-sm text-gray-600 hover:text-gray-900"
+                        >
+                            View all →
+                        </a>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {drawings.map((post) => (
+                            <div class="gallery-item relative group overflow-hidden aspect-[3/4] bg-gray-100">
+                                <a
+                                    href={`/gallery/${post.data.tags[0]}/${post.slug}`}
+                                    class="block h-full"
+                                >
+                                    <LocalImage
+                                        imageUrl={post.data.image!}
+                                        alt={post.data.title}
+                                        width={400}
+                                        class="w-full h-full object-cover object-center transition-transform duration-300 ease-in-out group-hover:scale-105"
+                                    />
+                                    <div class="absolute bottom-0 left-0 right-0 bg-black bg-opacity-70 text-white p-3 transform translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out">
+                                        <p class="text-sm font-medium">
+                                            {post.data.title}
+                                        </p>
+                                    </div>
+                                </a>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )
+        }
+
+        <!-- View Full Gallery Link -->
+        <div class="text-center">
+            <a
+                href="/gallery"
+                class="inline-block px-6 py-3 font-medium transition-colors duration-200"
+            >
+                View Full Gallery
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .gallery-item {
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .gallery-item:hover {
+        transform: translateY(-2px);
+    }
+</style>
